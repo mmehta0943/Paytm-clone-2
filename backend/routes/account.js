@@ -62,7 +62,9 @@ router.post("/request", authMiddleware, async (req, res) => {
     try {
         const { amount, to } = req.body;
 
-        if (!amount || amount <= 0) {
+        const parsedAmount = parseFloat(amount);
+
+        if (!parsedAmount || parsedAmount <= 0 || isNaN(parsedAmount)) {
             return res.status(400).json({
                 message: "Invalid amount",
                 status: "-1"
@@ -80,7 +82,7 @@ router.post("/request", authMiddleware, async (req, res) => {
         const newRequest = await Request.create({
             requesterId: req.userId,
             requesteeId: to,
-            amount: amount,
+            amount: parsedAmount,
             status: "pending"
         });
 
@@ -90,9 +92,11 @@ router.post("/request", authMiddleware, async (req, res) => {
             requestId: newRequest._id
         });
     } catch (error) {
+        console.error("Error creating request:", error);
         res.status(500).json({
             message: "Error creating request",
-            status: "-1"
+            status: "-1",
+            error: error.message
         });
     }
 });

@@ -63,7 +63,7 @@ export const RequestMoney = () => {
                         const response = await axios.post(
                           "http://localhost:3000/api/v1/account/request",
                           {
-                            to: id,
+                            to: userId,
                             amount,
                           },
                           {
