@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AppBar } from "../components/AppBar";
 import { Balance } from "../components/Balance";
 import { UserComponent } from "../components/UserComponent";
+import { RequestsList } from "../components/RequestsList";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import ReactLoading from "react-loading";
@@ -40,11 +41,12 @@ export const Dashboard = () => {
     fetchBalance(userId);
   }, [userId]);
   return (
-    <div className="bg-slate-300 h-screen">
+    <div className="bg-slate-300 min-h-screen">
       {!isLoading && (
         <div>
           <AppBar name={userId} />
           <Balance value={balance} />
+          <RequestsList />
           <UserComponent username={userId} />
         </div>
       )}

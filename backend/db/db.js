@@ -56,11 +56,40 @@ const accountSchema = new mongoose.Schema({
     },
 });
 
+// Request Schema for money requests
+const requestSchema = new mongoose.Schema({
+    requesterId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    requesteeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    amount: {
+        type: Number,
+        required: true,
+    },
+    status: {
+        type: String,
+        enum: ["pending", "approved", "rejected"],
+        default: "pending",
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+});
+
 // Create a model from the schema
 const User = mongoose.model("User", userSchema);
 const Account = mongoose.model("Account", accountSchema);
+const Request = mongoose.model("Request", requestSchema);
 
 module.exports = {
     User,
     Account,
+    Request,
 };

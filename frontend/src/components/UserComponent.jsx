@@ -37,9 +37,14 @@ export const UserComponent = ({ username }) => {
               ></input>
             </div>
             <div className="mt-10">
-              {users.map((user) => (
-                <User key={user._id} user={user} username={username} />
-              ))}
+              {users
+                .filter((user) => {
+                  const fullName = `${user.firstName} ${user.lastName}`;
+                  return fullName !== "Jane Doe" && fullName !== "John Doe" && user.username !== username;
+                })
+                .map((user) => (
+                  <User key={user._id} user={user} username={username} />
+                ))}
             </div>
           </div>
         </div>
@@ -51,7 +56,7 @@ export const UserComponent = ({ username }) => {
 function User({ user, username }) {
   const navigate = useNavigate();
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between mb-4 pb-4 border-b border-slate-300">
       <div className="flex">
         <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
           <div className="flex font-semibold flex-col justify-center h-full text-xl">
@@ -65,7 +70,7 @@ function User({ user, username }) {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center h-ful">
+      <div className="flex gap-2 flex-row justify-center h-ful">
         <Button
           onClick={() => {
             navigate(
@@ -78,6 +83,19 @@ function User({ user, username }) {
             );
           }}
           label={"Send Money"}
+        />
+        <Button
+          onClick={() => {
+            navigate(
+              "/request?id=" +
+                user._id +
+                "&name=" +
+                user.firstName +
+                "&userId=" +
+                username
+            );
+          }}
+          label={"Request Money"}
         />
       </div>
     </div>

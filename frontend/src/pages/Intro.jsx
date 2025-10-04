@@ -25,7 +25,7 @@ export const Intro = () => {
       {!isLoading && (
         <div className="justify-center items-center flex flex-col">
           <div className="mb-20">
-            <h1 className="font-bold text-4xl">Welcome to PayTM</h1>
+            <h1 className="font-bold text-4xl">Welcome!</h1>
           </div>
           <div className="w-max">
             <Button onClick={moveTosignUpPage} label={"Signup"}></Button>
